@@ -1,12 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import PhaserRoom from './phaser/phaser-room';
 
 function App() {
   return (
-    <h1>
-      Ayyy Boss
-    </h1>
+    <div className="container">
+      <h1 className="container">
+        Ayyy Boss
+      <PhaserRoom />
+      </h1>
+    </div>
   );
 }
 
