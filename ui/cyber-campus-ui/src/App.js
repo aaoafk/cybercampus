@@ -4,7 +4,7 @@ import PhaserRoom from './phaser/phaser-room';
 function App() {
   return (
     <div className="container">
-      <h1 className="container">
+      <h1>
         Ayyy Boss
       <PhaserRoom />
       </h1>
