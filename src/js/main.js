@@ -27,6 +27,7 @@ function showOrHideGame(show) {
 
 function createGame() {
   deleteGame();
+  initGameVars();
   game = new Phaser.Game(24 * 32, 17 * 32, Phaser.HEADLESS, document.getElementById('game'));
   game.state.add('Game', Game);
   game.state.start('Game');
@@ -36,6 +37,16 @@ function createGame() {
 
 function deleteGame() {
   game = null;
+
+  // Need to figure out how to remove player from game.
+  // Client (and server?) still thinks players from deleted games (same tab) are still active.
+  if (Game && Game.playerMap) {
+    const keys = Object.keys(Game.playerMap);
+    keys.forEach(key => Game.removePlayer(key));
+    console.log(Game.playerMap);
+  }
+
+  Game = {};
 
   const gameElement = document.getElementById('game');
   const blankElement = document.createElement('div');
