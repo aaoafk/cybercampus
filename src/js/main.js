@@ -48,9 +48,6 @@ function deleteClient() {
 
 function deleteGame() {
   game = null;
-
-  // Need to figure out how to remove player from game.
-  // Client (and server?) still thinks players from deleted games (same tab) are still active.
   if (Game && Game.playerMap) {
     const keys = Object.keys(Game.playerMap);
     keys.forEach(key => Game.removePlayer(key));
