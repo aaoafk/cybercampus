@@ -4,7 +4,10 @@
 //noinspection JSCheckFunctionSignatures,JSCheckFunctionSignatures,JSCheckFunctionSignatures
 var game;
 
-function showGame() {
+/**
+ * If hidden then show. If shown then hide.
+ */
+function gameVisibility() {
   const element = document.getElementById('game');
   if (element.style.display === 'none' || !element.style.display) {
     element.style.display = 'block';
@@ -24,7 +27,7 @@ function showOrHideGame(show) {
 
 function createGame() {
   deleteGame();
-  game = new Phaser.Game(24 * 32, 17 * 32, Phaser.AUTO, document.getElementById('game'));
+  game = new Phaser.Game(24 * 32, 17 * 32, Phaser.HEADLESS, document.getElementById('game'));
   game.state.add('Game', Game);
   game.state.start('Game');
 
