@@ -3,9 +3,10 @@
  */
 //noinspection JSCheckFunctionSignatures,JSCheckFunctionSignatures,JSCheckFunctionSignatures
 
-// Declare global variables
-var game;
-var Game;
+// (sadly) declare global variables
+var phaserGame; // GUI for game
+var GameLogic; // underlying logic for GUI
+var gameFunctions; // extra functions for GameLogic
 var Client;
 
 function cleanUpGame() {
@@ -22,7 +23,7 @@ function createGame() {
 }
 
 function main() {
-  // createGame();
+  // createGame(); // initially don't create a game - only make one if a user actually "joins" a room
   showOrHideGame('false');
 }
 

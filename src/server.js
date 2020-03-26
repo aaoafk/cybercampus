@@ -46,9 +46,9 @@ io.on('connection', function (socket) {
 });
 
 function getAllPlayers() {
-  var players = [];
+  const players = [];
   Object.keys(io.sockets.connected).forEach(function (socketID) {
-    var player = io.sockets.connected[socketID].player;
+    const player = io.sockets.connected[socketID].player;
     if (player) players.push(player);
   });
   return players;
