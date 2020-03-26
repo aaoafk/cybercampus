@@ -3,6 +3,8 @@
  */
 //noinspection JSCheckFunctionSignatures,JSCheckFunctionSignatures,JSCheckFunctionSignatures
 var game;
+var Game;
+var Client;
 
 /**
  * If hidden then show. If shown then hide.
@@ -26,6 +28,8 @@ function showOrHideGame(show) {
 }
 
 function createGame() {
+  deleteClient();
+  initClient();
   deleteGame();
   initGameVars();
   game = new Phaser.Game(24 * 32, 17 * 32, Phaser.HEADLESS, document.getElementById('game'));
@@ -33,6 +37,13 @@ function createGame() {
   game.state.start('Game');
 
   showOrHideGame('true');
+}
+
+function deleteClient() {
+  if (Client) {
+    Client.socket.disconnect(true);
+  }
+  Client = {};
 }
 
 function deleteGame() {

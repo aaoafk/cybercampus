@@ -3,8 +3,6 @@
  * E-mail: jerome.renaux@gmail.com
  */
 
-var Game;
-
 function initGameVars() {
   Game = {};
 
