@@ -1,6 +1,5 @@
 /*
- * Author: Jerome Renaux
- * E-mail: jerome.renaux@gmail.com
+ * Bye J
  */
 
 function initGameVars() {
@@ -52,4 +51,49 @@ function initGameVars() {
     Game.playerMap[id].destroy();
     delete Game.playerMap[id];
   };
+}
+
+/**
+ * If hidden then show. If shown then hide.
+ */
+function gameVisibility() {
+  const element = document.getElementById('game');
+  if (element.style.display === 'none' || !element.style.display) {
+    element.style.display = 'block';
+  } else {
+    element.style.display = 'none';
+  }
+}
+
+function showOrHideGame(show) {
+  const element = document.getElementById('game');
+  if (show === false) {
+    element.style.display = 'none';
+  } else {
+    element.style.display = 'block';
+  }
+}
+
+function initGame() {
+  game = new Phaser.Game(24 * 32, 17 * 32, Phaser.HEADLESS, document.getElementById('game'));
+  game.state.add('Game', Game);
+  game.state.start('Game');
+}
+
+function deleteGame() {
+  game = null;
+  if (Game && Game.playerMap) {
+    const keys = Object.keys(Game.playerMap);
+    keys.forEach(key => Game.removePlayer(key));
+    console.log(Game.playerMap);
+  }
+
+  Game = {};
+
+  const gameElement = document.getElementById('game');
+  const blankElement = document.createElement('div');
+  blankElement.id = 'game';
+  gameElement.parentNode.replaceChild(blankElement, gameElement);
+
+  showOrHideGame('false');
 }

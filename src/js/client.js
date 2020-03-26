@@ -1,5 +1,5 @@
 /**
- * Created by Jerome on 03-03-17.
+ * J ain't here
  */
 
 function initClient() {
@@ -36,4 +36,11 @@ function initClient() {
       Game.removePlayer(id);
     });
   });
+}
+
+function deleteClient() {
+  if (Client) {
+    Client.socket.disconnect(true);
+  }
+  Client = {};
 }
