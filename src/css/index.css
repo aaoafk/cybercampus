@@ -1,0 +1,10 @@
+.game-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#game {
+  margin: 0 auto;
+  display: none;
+}
