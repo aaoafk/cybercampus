@@ -28,6 +28,8 @@ function initGameVars() {
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
     layer.events.onInputUp.add(GameLogic.getCoordinates, this);
     Client.askNewPlayer();
+    // set up keyboard input
+    cursors = phaserGame.input.keyboard.createCursorKeys()
   };
 
   GameLogic.getCoordinates = function (layer, pointer) {
@@ -36,6 +38,7 @@ function initGameVars() {
 
   GameLogic.addNewPlayer = function (id, x, y) {
     GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
+    playerId = id; // stash for indexing
   };
 
   GameLogic.movePlayer = function (id, x, y) {
@@ -46,6 +49,19 @@ function initGameVars() {
     tween.to({ x: x, y: y }, duration);
     tween.start();
   };
+
+  GameLogic.update = function () { 
+    var player = GameLogic.playerMap[playerId];
+    if (cursors.left.isDown) {
+      player.position.x -= 3;
+    } else if (cursors.right.isDown) {
+      player.position.x += 3;
+    } else if (cursors.up.isDown) {
+      player.position.y -= 3;
+    } else if (cursors.down.isDown) {
+      player.position.y += 3;
+    } 
+  }
 
   GameLogic.removePlayer = function (id) {
     GameLogic.playerMap[id].destroy();
