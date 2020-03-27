@@ -10,8 +10,6 @@ var gameFunctions; // extra functions for GameLogic
 var Client; // client.js
 var audioSocket; // audio-client.js
 var audioConstraints; // audio-client.js
-var cursors; // movement in game.js
-var playerId; // indexing in game.js
 
 function cleanUpGame() {
   deleteClient();

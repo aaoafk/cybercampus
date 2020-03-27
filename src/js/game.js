@@ -17,8 +17,7 @@ function initGameVars() {
 
   GameLogic.create = function () {
     GameLogic.playerMap = {};
-    const testKey = phaserGame.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-    testKey.onDown.add(Client.sendTest, this);
+    GameLogic.cursors = phaserGame.input.keyboard.createCursorKeys(); // set up keyboard input
     const map = phaserGame.add.tilemap('map');
     map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
     let layer;
@@ -28,8 +27,6 @@ function initGameVars() {
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
     layer.events.onInputUp.add(GameLogic.getCoordinates, this);
     Client.askNewPlayer();
-    // set up keyboard input
-    cursors = phaserGame.input.keyboard.createCursorKeys()
   };
 
   GameLogic.getCoordinates = function (layer, pointer) {
@@ -38,7 +35,8 @@ function initGameVars() {
 
   GameLogic.addNewPlayer = function (id, x, y) {
     GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
-    playerId = id; // stash for indexing
+    GameLogic.playerId = id; // save player id -> potential issue here:
+    // there can be multiple players per browser (one per tab). this variable only stores one tab's id. we can try to force limit a browser/client to one tab.
   };
 
   GameLogic.movePlayer = function (id, x, y) {
@@ -50,17 +48,17 @@ function initGameVars() {
     tween.start();
   };
 
-  GameLogic.update = function () { 
-    var player = GameLogic.playerMap[playerId];
-    if (cursors.left.isDown) {
+  GameLogic.update = function () {
+    const player = GameLogic.playerMap[GameLogic.playerId];
+    if (GameLogic.cursors.left.isDown) {
       player.position.x -= 3;
-    } else if (cursors.right.isDown) {
+    } else if (GameLogic.cursors.right.isDown) {
       player.position.x += 3;
-    } else if (cursors.up.isDown) {
+    } else if (GameLogic.cursors.up.isDown) {
       player.position.y -= 3;
-    } else if (cursors.down.isDown) {
+    } else if (GameLogic.cursors.down.isDown) {
       player.position.y += 3;
-    } 
+    }
   }
 
   GameLogic.removePlayer = function (id) {
