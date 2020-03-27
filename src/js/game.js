@@ -4,6 +4,8 @@
  */
 
 var Game = {};
+var cursors;
+var playerId;
 
 Game.init = function () {
   game.stage.disableVisibilityChange = true;
@@ -18,6 +20,7 @@ Game.preload = function () {
 Game.create = function () {
   Game.playerMap = {};
   var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+  cursors = game.input.keyboard.createCursorKeys()
   testKey.onDown.add(Client.sendTest, this);
   var map = game.add.tilemap('map');
   map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
@@ -36,6 +39,8 @@ Game.getCoordinates = function (layer, pointer) {
 
 Game.addNewPlayer = function (id, x, y) {
   Game.playerMap[id] = game.add.sprite(x, y, 'sprite');
+  playerId = id;
+  console.log("Added new player: ", Game.playerMap[playerId]);
 };
 
 Game.movePlayer = function (id, x, y) {
@@ -46,6 +51,19 @@ Game.movePlayer = function (id, x, y) {
   tween.to({ x: x, y: y }, duration);
   tween.start();
 };
+
+Game.update = function () { 
+  var player = Game.playerMap[playerId];
+  if (cursors.left.isDown) {
+    player.position.x -= 3;
+  } else if (cursors.right.isDown) {
+    player.position.x += 3;
+  } else if (cursors.up.isDown) {
+    player.position.y -= 3;
+  } else if (cursors.down.isDown) {
+    player.position.y += 3;
+  } 
+}
 
 Game.removePlayer = function (id) {
   Game.playerMap[id].destroy();
