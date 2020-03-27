@@ -43,6 +43,11 @@ io.on('connection', function (socket) {
   socket.on('test', function () {
     console.log('test received');
   });
+
+  socket.on('radio', function (blob) {
+    // 'voice' is the name of the 'channel' in audio-client.js where the client receives the audio
+    socket.broadcast.emit('voice', blob);
+  });
 });
 
 function getAllPlayers() {

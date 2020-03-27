@@ -7,7 +7,9 @@
 var phaserGame; // GUI for game
 var GameLogic; // underlying logic for GUI
 var gameFunctions; // extra functions for GameLogic
-var Client;
+var Client; // client.js
+var audioSocket; // audio-client.js
+var audioConstraints; // audio-client.js
 
 function cleanUpGame() {
   deleteClient();
