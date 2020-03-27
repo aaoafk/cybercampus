@@ -4,9 +4,12 @@
  * or so, instead of just sending five seconds worth of audio one time.
  */
 
+var audio = document.createElement('audio');
+
 // Created a separate connection for audio
 audioSocket = io.connect();
 audioConstraints = { audio: true };
+
 navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream) {
   const mediaRecorder = new MediaRecorder(mediaStream);
   mediaRecorder.onstart = function (e) {
@@ -20,6 +23,14 @@ navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream
     audioSocket.emit('radio', blob);
   };
 
+  mediaRecorder.sendToServer = function () {
+    mediaRecorder.requestData();
+    // console.log(this.chunks);
+    const blob = new Blob(this.chunks, { 'type': 'audio/ogg; codecs=opus' });
+    audioSocket.emit('radio', blob);
+    // this.chunks = [];
+  };
+
   // Start recording
   mediaRecorder.start();
 
@@ -27,13 +38,14 @@ navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream
   setInterval(() => {
     mediaRecorder.stop();
     mediaRecorder.start();
-  }, 1000);
+    // mediaRecorder.sendToServer();
+  }, 2000);
 });
 
 // When the client receives a voice message it will play the sound
 audioSocket.on('voice', function (arrayBuffer) {
   const blob = new Blob([arrayBuffer], { 'type': 'audio/ogg; codecs=opus' });
-  const audio = document.createElement('audio');
   audio.src = window.URL.createObjectURL(blob);
+  console.log(audio);
   audio.play();
 });
