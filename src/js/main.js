@@ -10,7 +10,8 @@ var gameFunctions; // extra functions for GameLogic
 var Client; // client.js
 var audioSocket; // audio-client.js
 var audioConstraints; // audio-client.js
-var loggedIn; // modal-functions.js
+var username = ''; // modal-functions.js
+var loggedIn = false; // modal-functions.js
 
 function cleanUpGame() {
   deleteClient();
