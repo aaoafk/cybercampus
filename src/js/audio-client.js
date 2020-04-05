@@ -3,10 +3,6 @@
  * We need to make use of the built-in MediaRecorder. Our goal is to make it so that we send audio every second
  * or so, instead of just sending five seconds worth of audio one time.
  */
-
-var audio = document.createElement('audio');
-var audioClips = {};
-var audioClipsHTML = document.createElement('audioClips');
 var audioNumber = 0;
 
 // Created a separate connection for audio
@@ -48,12 +44,11 @@ navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream
 // When the client receives a voice message it will play the sound
 audioSocket.on('voice', function (arrayBuffer) {
   const blob = new Blob([arrayBuffer], { 'type': 'audio/ogg; codecs=opus' });
-
-  const audioClip = audioClipsHTML.appendChild(document.createElement('audioClip-' + audioNumber.toString()));
-  audioClips[audioNumber] = audioClip;
+  const clip = document.createElement('audio');
+  clip.id = 'audioclip-' + audioNumber.toString();
+  clip.controls = 'controls';
+  clip.src = window.URL.createObjectURL(blob);
+  clip.type = 'audio/ogg';
   audioNumber += 1;
-
-  audioClip.src = window.URL.createObjectURL(blob);
-  console.log(audioClip);
-  audioClip.play();
+  clip.play();
 });
