@@ -23,12 +23,16 @@ function cleanUpGame() {
 function createGame() {
   cleanUpGame();
   initGame();
-  showOrHideGame('true');
+  showOrHideGame(true);
+}
+
+function tellMainToCheckLogin() {
+  if (loggedIn) showOrHideGame(true);
 }
 
 function main() {
   // createGame(); // initially don't create a game - only make one if a user actually "joins" a room
-  showOrHideGame('false');
+  showOrHideGame(false);
 }
 
 main();

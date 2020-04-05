@@ -5,6 +5,9 @@
  */
 
 var audio = document.createElement('audio');
+var audioClips = {};
+var audioClipsHTML = document.createElement('audioClips');
+var audioNumber = 0;
 
 // Created a separate connection for audio
 audioSocket = io.connect();
@@ -45,7 +48,12 @@ navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream
 // When the client receives a voice message it will play the sound
 audioSocket.on('voice', function (arrayBuffer) {
   const blob = new Blob([arrayBuffer], { 'type': 'audio/ogg; codecs=opus' });
-  audio.src = window.URL.createObjectURL(blob);
-  console.log(audio);
-  audio.play();
+
+  const audioClip = audioClipsHTML.appendChild(document.createElement('audioClip-' + audioNumber.toString()));
+  audioClips[audioNumber] = audioClip;
+  audioNumber += 1;
+
+  audioClip.src = window.URL.createObjectURL(blob);
+  console.log(audioClip);
+  audioClip.play();
 });

@@ -28,6 +28,7 @@ function hideModal() {
   if (validateName(username)) {
     $('#navigation-modal').modal('hide');
     loggedIn = true;
+    tellMainToCheckLogin();
   } else return;
 }
 
