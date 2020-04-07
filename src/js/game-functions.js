@@ -39,5 +39,5 @@ function deleteGame() {
   blankElement.id = 'phaserGame';
   phaserGameElement.parentNode.replaceChild(blankElement, phaserGameElement);
 
-  showOrHideGame('false');
+  showOrHideGame(false);
 }

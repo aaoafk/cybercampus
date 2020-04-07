@@ -24,23 +24,29 @@
     <div class="container game-container">
         <div>
             <div>
-                <input type="button" onclick="gameVisibility()" value="Show or Hide">
-                <input type="button" onclick="createGame()" value="Create Game">
+                <div id="welcome-text"></div>
+                <!-- <input type="button" onclick="gameVisibility()" value="Show or Hide"> -->
+                <!-- <input type="button" onclick="createGame()" value="Create Game"> -->
             </div>
             <div>
                 <div id='phaserGame'></div>
             </div>
             <div>
-                <input type="button" onclick="deleteGame()" value="Delete Game">
+                <!-- <input type="button" onclick="deleteGame()" value="Delete Game"> -->
             </div>
         </div>
     </div>
+
+    <!-- Parent Navigation Modal is loaded in modal-functions.js -->
+    <div id="parent-navigation-modal"></div>
+
 </body>
 
 <script src="js/game.js" type="text/javascript"></script>
 <script src="js/game-functions.js" type="text/javascript"></script>
 <script src="js/client.js" type="text/javascript"></script>
 <script src="js/audio-client.js" type="text/javascript"></script>
+<script src="js/modal-functions.js" type="text/javascript"></script>
 <script src="js/main.js" type="text/javascript"></script>
 
 </html>
