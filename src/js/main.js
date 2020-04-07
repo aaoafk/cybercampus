@@ -23,11 +23,12 @@ function cleanUpGame() {
 function createGame() {
   cleanUpGame();
   initGame();
+  document.getElementById('welcome-text').innerHTML = '<h1>Hello ' + username + '!</h1>';
   showOrHideGame(true);
 }
 
 function tellMainToCheckLogin() {
-  if (loggedIn) showOrHideGame(true);
+  if (loggedIn) createGame();
 }
 
 function main() {

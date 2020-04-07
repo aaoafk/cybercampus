@@ -5,6 +5,7 @@ const modalHTML = `
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Welcome to Cyber Campus!</h5>
+                <h5>We currently support Swarthmore College, and that's it!</h5>
             </div>
             <div class="modal-body">
                 <p>What's your name?</p>
