@@ -12,6 +12,7 @@ var audioSocket; // audio-client.js
 var audioConstraints; // audio-client.js
 var username = ''; // modal-functions.js
 var loggedIn = false; // modal-functions.js
+var allPlayers = {};
 
 function cleanUpGame() {
   deleteClient();
@@ -29,6 +30,12 @@ function createGame() {
 
 function tellMainToCheckLogin() {
   if (loggedIn) createGame();
+}
+
+function tellMainToUpdateMetaData() {
+  let players = '<h5>Online players</h5>';
+  Object.keys(allPlayers).forEach(id => players += '<p>' + allPlayers[id] + '</p>');
+  document.getElementById('metadata-panel').innerHTML = players;
 }
 
 function main() {

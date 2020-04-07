@@ -11,7 +11,9 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-server.lastPlayderID = 0;
+server.idToName = {};
+
+server.lastPlayerID = 0;
 
 server.listen(process.env.PORT || 8081, function () {
   console.log('Listening on ' + server.address().port);
@@ -19,12 +21,16 @@ server.listen(process.env.PORT || 8081, function () {
 
 io.on('connection', function (socket) {
 
-  socket.on('newplayer', function () {
+  socket.on('newplayer', function (username) {
     socket.player = {
-      id: server.lastPlayderID++,
+      id: server.lastPlayerID++,
       x: randomInt(100, 400),
-      y: randomInt(100, 400)
+      y: randomInt(100, 400),
+      username: username
     };
+    console.log('aids 1' + socket.player.id + ' ' + username);
+    server.idToName[socket.player.id] = username;
+
     socket.emit('allplayers', getAllPlayers());
     socket.broadcast.emit('newplayer', socket.player);
 
@@ -54,8 +60,10 @@ function getAllPlayers() {
   const players = [];
   Object.keys(io.sockets.connected).forEach(function (socketID) {
     const player = io.sockets.connected[socketID].player;
-    if (player) players.push(player);
+    if (player) players.push({...player, username: server.idToName[socketID]});
   });
+  console.log(players);
+  console.log('hoo haw');
   return players;
 }
 

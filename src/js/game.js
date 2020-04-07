@@ -33,7 +33,9 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  GameLogic.addNewPlayer = function (id, x, y) {
+  GameLogic.addNewPlayer = function (id, x, y, playerName=null) {
+    allPlayers[id] = playerName;
+    tellMainToUpdateMetaData();
     GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
     GameLogic.playerId = id; // save player id -> potential issue here:
     // there can be multiple players per browser (one per tab). this variable only stores one tab's id. we can try to force limit a browser/client to one tab.
@@ -64,5 +66,7 @@ function initGameVars() {
   GameLogic.removePlayer = function (id) {
     GameLogic.playerMap[id].destroy();
     delete GameLogic.playerMap[id];
+    delete allPlayers[id];
+    tellMainToUpdateMetaData();
   };
 }
