@@ -10,8 +10,10 @@ function initGameVars() {
   };
 
   GameLogic.preload = function () {
-    phaserGame.load.tilemap('map', 'assets/map/example_map.json', null, Phaser.Tilemap.TILED_JSON);
+    phaserGame.load.tilemap('map', 'assets/map/swat_map_full.json', null, Phaser.Tilemap.TILED_JSON);
     phaserGame.load.spritesheet('tileset', 'assets/map/tilesheet.png', 32, 32);
+    phaserGame.load.spritesheet('tree_variations_0', 'assets/sprites/tree_variations_0.png', 32, 32);
+    phaserGame.load.spritesheet('vx_buildingstileset', 'assets/sprites/vx_buildingstileset.png', 32, 32);
     phaserGame.load.image('sprite', 'assets/sprites/sprite.png');
   };
 
