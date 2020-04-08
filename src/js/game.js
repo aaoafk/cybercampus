@@ -10,10 +10,11 @@ function initGameVars() {
   };
 
   GameLogic.preload = function () {
-    phaserGame.load.tilemap('map', 'assets/map/swat_full_map.json', null, Phaser.Tilemap.TILED_JSON);
-    phaserGame.load.image('tileset', 'assets/map/tilesheet.png', 32, 32);
-    phaserGame.load.image('tree_variations_0', 'assets/sprites/tree-variations_0.png', 32, 32);
-    phaserGame.load.image('vx_buildingstileset', 'assets/sprites/vx-buildingstileset.png', 32, 32);
+    phaserGame.load.tilemap('map', 'assets/map/swat_map_json1.json', null, Phaser.Tilemap.TILED_JSON);
+    phaserGame.load.spritesheet('tileset', 'assets/map/tilesheet.png', 32, 32);
+    phaserGame.load.spritesheet('treetileset', 'assets/map/trees2.png', 32, 32);
+    phaserGame.load.spritesheet('buildingstileset', 'assets/map/buildings.png', 32, 32);
+
     phaserGame.load.image('sprite', 'assets/sprites/sprite.png');
   };
 
@@ -21,12 +22,17 @@ function initGameVars() {
     GameLogic.playerMap = {};
     GameLogic.cursors = phaserGame.input.keyboard.createCursorKeys(); // set up keyboard input
     const map = phaserGame.add.tilemap('map');
-    map.addTilesetImage('tilesheet', 'tileset'); // tilesheet is the key of the tileset in map's JSON file
+    // add tileset images
+    map.addTilesetImage('tilesheet', 'tileset'); 
+    map.addTilesetImage('trees', 'treetileset'); 
+    map.addTilesetImage('buildings', 'buildingstileset');
+
     let layer;
     for (let i = 0; i < map.layers.length; i++) {
       layer = map.createLayer(i);
     }
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
+    layer.resizeWorld();
     layer.events.onInputUp.add(GameLogic.getCoordinates, this); ////////
     Client.askNewPlayer();
   };
@@ -39,8 +45,10 @@ function initGameVars() {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
     GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
+    phaserGame.camera.follow(GameLogic.playerMap[id]);
     GameLogic.playerId = id; // save player id -> potential issue here:
-    // there can be multiple players per browser (one per tab). this variable only stores one tab's id. we can try to force limit a browser/client to one tab.
+    // there can be multiple players per browser (one per tab). this variable only stores 
+    // one tab's id. we can try to force limit a browser/client to one tab.
   };
 
   GameLogic.movePlayer = function (id, x, y) {

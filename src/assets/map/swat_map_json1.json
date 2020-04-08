@@ -193,8 +193,8 @@
         {
          "columns":16,
          "firstgid":1961,
-         "image":"trees.png",
-         "imageheight":289,
+         "image":"trees2.png",
+         "imageheight":288,
          "imagewidth":512,
          "margin":0,
          "name":"trees",
@@ -206,7 +206,7 @@
         {
          "columns":16,
          "firstgid":2105,
-         "image":"building.png",
+         "image":"buildings.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -218,6 +218,6 @@
         }],
  "tilewidth":32,
  "type":"map",
- "version":1.2,
+ "version":1.1,
  "width":60
 }
