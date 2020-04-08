@@ -26,7 +26,7 @@ function initClient() {
 
   Client.socket.on('allplayers', function (data) {
     for (let i = 0; i < data.length; i++) {
-      GameLogic.addNewPlayer(data[i].id, data[i].x, data[i].y, data.username);
+      GameLogic.addNewPlayer(data[i].id, data[i].x, data[i].y, data[i].username);
     }
 
     Client.socket.on('move', function (data) {
