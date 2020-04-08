@@ -5,6 +5,7 @@
 
 // (sadly) declare global variables
 var phaserGame; // GUI for game
+var room; // current room of player
 var GameLogic; // underlying logic for GUI
 var gameFunctions; // extra functions for GameLogic
 var Client; // client.js

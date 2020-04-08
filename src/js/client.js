@@ -16,7 +16,6 @@ function initClient() {
   };
 
   Client.sendClick = function (x, y) {
-    console.log('moveplayer client');
     Client.socket.emit('click', { x: x, y: y });
   };
 

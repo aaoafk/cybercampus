@@ -53,9 +53,13 @@ io.on('connection', function (socket) {
     console.log('test received');
   });
 
-  socket.on('radio', function (blob) {
+  socket.on('parrish', function (blob) {
     // 'voice' is the name of the 'channel' in audio-client.js where the client receives the audio
-    socket.broadcast.emit('voice', blob);
+    socket.broadcast.emit('parrishVoice', blob);
+  });
+
+  socket.on('wholeCampus', function (blob) {
+    socket.broadcast.emit('wholeCampusVoice', blob);
   });
 });
 

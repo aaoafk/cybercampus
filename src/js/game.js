@@ -42,7 +42,6 @@ function initGameVars() {
   };
 
   GameLogic.movePlayer = function (id, x, y) {
-    console.log('game moveplayer');
     const player = GameLogic.playerMap[id];
     const distance = Phaser.Math.distance(player.x, player.y, x, y);
     const tween = phaserGame.add.tween(player);
