@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-server.lastPlayderID = 0;
+server.lastPlayerID = 0;
 
 server.listen(process.env.PORT || 8081, function () {
   console.log('Listening on ' + server.address().port);
@@ -19,19 +19,28 @@ server.listen(process.env.PORT || 8081, function () {
 
 io.on('connection', function (socket) {
 
-  socket.on('newplayer', function () {
+  socket.on('newplayer', function (username) {
     socket.player = {
-      id: server.lastPlayderID++,
+      id: server.lastPlayerID++,
       x: randomInt(100, 400),
-      y: randomInt(100, 400)
+      y: randomInt(100, 400),
+      username: username
     };
+    socket.username = username;
+
     socket.emit('allplayers', getAllPlayers());
     socket.broadcast.emit('newplayer', socket.player);
 
     socket.on('click', function (data) {
-      console.log('click to ' + data.x + ', ' + data.y);
+      // console.log('click to ' + data.x + ', ' + data.y);
       socket.player.x = data.x;
       socket.player.y = data.y;
+      io.emit('move', socket.player);
+    });
+
+    socket.on('adjustPosition', function (data) {
+      socket.player.x += data.deltaX;
+      socket.player.y += data.deltaY;
       io.emit('move', socket.player);
     });
 
@@ -44,9 +53,13 @@ io.on('connection', function (socket) {
     console.log('test received');
   });
 
-  socket.on('radio', function (blob) {
+  socket.on('parrish', function (blob) {
     // 'voice' is the name of the 'channel' in audio-client.js where the client receives the audio
-    socket.broadcast.emit('voice', blob);
+    socket.broadcast.emit('parrishVoice', blob);
+  });
+
+  socket.on('wholeCampus', function (blob) {
+    socket.broadcast.emit('wholeCampusVoice', blob);
   });
 });
 

@@ -27,7 +27,7 @@ function initGameVars() {
       layer = map.createLayer(i);
     }
     layer.inputEnabled = true; // Allows clicking on the map ; it's enough to do it on the last layer
-    layer.events.onInputUp.add(GameLogic.getCoordinates, this);
+    layer.events.onInputUp.add(GameLogic.getCoordinates, this); ////////
     Client.askNewPlayer();
   };
 
@@ -35,7 +35,9 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  GameLogic.addNewPlayer = function (id, x, y) {
+  GameLogic.addNewPlayer = function (id, x, y, playerName=null) {
+    allPlayers[id] = playerName;
+    tellMainToUpdateMetaData();
     GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
     GameLogic.playerId = id; // save player id -> potential issue here:
     // there can be multiple players per browser (one per tab). this variable only stores one tab's id. we can try to force limit a browser/client to one tab.
@@ -51,20 +53,22 @@ function initGameVars() {
   };
 
   GameLogic.update = function () {
-    const player = GameLogic.playerMap[GameLogic.playerId];
+    const unit = 3;
     if (GameLogic.cursors.left.isDown) {
-      player.position.x -= 3;
+      Client.sendArrowKey(-unit, 0);
     } else if (GameLogic.cursors.right.isDown) {
-      player.position.x += 3;
+      Client.sendArrowKey(unit, 0);
     } else if (GameLogic.cursors.up.isDown) {
-      player.position.y -= 3;
+      Client.sendArrowKey(0, -unit);
     } else if (GameLogic.cursors.down.isDown) {
-      player.position.y += 3;
+      Client.sendArrowKey(0, unit);
     }
   }
 
   GameLogic.removePlayer = function (id) {
     GameLogic.playerMap[id].destroy();
     delete GameLogic.playerMap[id];
+    delete allPlayers[id];
+    tellMainToUpdateMetaData();
   };
 }
