@@ -26,16 +26,21 @@ io.on('connection', function (socket) {
       y: randomInt(100, 400),
       username: username
     };
-    console.log('Player id and name: ' + socket.player.id + ' ' + username);
     socket.username = username;
 
     socket.emit('allplayers', getAllPlayers());
     socket.broadcast.emit('newplayer', socket.player);
 
     socket.on('click', function (data) {
-      console.log('click to ' + data.x + ', ' + data.y);
+      // console.log('click to ' + data.x + ', ' + data.y);
       socket.player.x = data.x;
       socket.player.y = data.y;
+      io.emit('move', socket.player);
+    });
+
+    socket.on('adjustPosition', function (data) {
+      socket.player.x += data.deltaX;
+      socket.player.y += data.deltaY;
       io.emit('move', socket.player);
     });
 

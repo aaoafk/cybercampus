@@ -16,8 +16,13 @@ function initClient() {
   };
 
   Client.sendClick = function (x, y) {
+    console.log('moveplayer client');
     Client.socket.emit('click', { x: x, y: y });
   };
+
+  Client.sendArrowKey = function (deltaX, deltaY) {
+    Client.socket.emit('adjustPosition', { deltaX: deltaX, deltaY: deltaY });
+  }
 
   Client.socket.on('newplayer', function (data) {
     GameLogic.addNewPlayer(data.id, data.x, data.y, data.username);
