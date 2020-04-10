@@ -25,8 +25,8 @@ function initGameVars() {
     GameLogic.cursors = phaserGame.input.keyboard.createCursorKeys(); // set up keyboard input
     const map = phaserGame.add.tilemap('map');
     // add tileset images
-    map.addTilesetImage('tilesheet', 'tileset'); 
-    map.addTilesetImage('trees', 'treetileset'); 
+    map.addTilesetImage('tilesheet', 'tileset');
+    map.addTilesetImage('trees', 'treetileset');
     map.addTilesetImage('buildings', 'buildingstileset');
     phaserGame.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
@@ -45,17 +45,22 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  GameLogic.addNewPlayer = function (id, x, y, playerName=null) {
+  GameLogic.addNewPlayer = function (id, x, y, playerName = null) {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
-    character = phaserGame.add.sprite(x, y, 'sprite');
+
+    const character = this.add.sprite(x, y, 'sprite');
+    const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
+    const text = phaserGame.add.text(0, -5, playerName, style); // need to multiply -5 by the number of times the username wraps around
+    character.addChild(text);
+
     phaserGame.camera.follow(character);
-    
+
     phaserGame.physics.arcade.enable(character);
     // prevent out of bounds movement
     character.body.setCircle(16);
     character.body.collideWorldBounds = true;
-    
+
     GameLogic.playerMap[id] = character;
     GameLogic.playerId = id; // save player id -> potential issue here:
     // there can be multiple players per browser (one per tab). this variable only stores 
@@ -69,6 +74,7 @@ function initGameVars() {
     const duration = distance * 10;
     tween.to({ x: x, y: y }, duration);
     tween.start();
+    playFootsteps(duration);
   };
 
   GameLogic.update = function () {
