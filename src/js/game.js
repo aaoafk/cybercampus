@@ -68,7 +68,7 @@ function initGameVars() {
 
     const character = this.add.sprite(x, y, 'sprite');
     const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
-    const text = phaserGame.add.text(0, -5, playerName, style);
+    const text = phaserGame.add.text(0, -5, playerName, style); // need to multiple -5 by the number of times the username wraps around
     character.addChild(text);
 
     phaserGame.camera.follow(character);
