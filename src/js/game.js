@@ -19,6 +19,8 @@ function initGameVars() {
   };
 
   GameLogic.create = function () {
+    // enable physics for player sprite
+    phaserGame.physics.startSystem(Phaser.Physics.ARCADE);
     GameLogic.playerMap = {};
     GameLogic.cursors = phaserGame.input.keyboard.createCursorKeys(); // set up keyboard input
     const map = phaserGame.add.tilemap('map');
@@ -26,7 +28,9 @@ function initGameVars() {
     map.addTilesetImage('tilesheet', 'tileset'); 
     map.addTilesetImage('trees', 'treetileset'); 
     map.addTilesetImage('buildings', 'buildingstileset');
+    phaserGame.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
+    // create layers
     let layer;
     for (let i = 0; i < map.layers.length; i++) {
       layer = map.createLayer(i);
@@ -44,8 +48,15 @@ function initGameVars() {
   GameLogic.addNewPlayer = function (id, x, y, playerName=null) {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
-    GameLogic.playerMap[id] = phaserGame.add.sprite(x, y, 'sprite');
-    phaserGame.camera.follow(GameLogic.playerMap[id]);
+    character = phaserGame.add.sprite(x, y, 'sprite');
+    phaserGame.camera.follow(character);
+    
+    phaserGame.physics.arcade.enable(character);
+    // prevent out of bounds movement
+    character.body.setCircle(16);
+    character.body.collideWorldBounds = true;
+    
+    GameLogic.playerMap[id] = character;
     GameLogic.playerId = id; // save player id -> potential issue here:
     // there can be multiple players per browser (one per tab). this variable only stores 
     // one tab's id. we can try to force limit a browser/client to one tab.
@@ -61,6 +72,7 @@ function initGameVars() {
   };
 
   GameLogic.update = function () {
+    // keyboard movement
     const unit = 3;
     if (GameLogic.cursors.left.isDown) {
       Client.sendArrowKey(-unit, 0);

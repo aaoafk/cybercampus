@@ -20,6 +20,10 @@ function showOrHideGame(show) {
 }
 
 function initGame() {
+  // full screen potential solution 
+  // phaserGame = new Phaser.Game(window.innerWidth * window.devicePixelRatio, 
+  //   window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 
+  //   document.getElementById('phaserGame'));
   phaserGame = new Phaser.Game(24 * 32, 17 * 32, Phaser.HEADLESS, document.getElementById('phaserGame'));
   phaserGame.state.add('GameLogic', GameLogic);
   phaserGame.state.start('GameLogic');
