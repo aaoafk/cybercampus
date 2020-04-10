@@ -41,7 +41,7 @@ navigator.mediaDevices.getUserMedia(audioConstraints).then(function (mediaStream
     mediaRecorder.start();
     // mediaRecorder.sendToServer();
   }, 2000);
-});
+}).catch(reason => console.log(reason));
 
 // When the client receives a voice message it will play the sound
 audioSocket.on('wholeCampusVoice', function (arrayBuffer) {
