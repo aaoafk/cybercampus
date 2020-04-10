@@ -45,30 +45,13 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  // friendAndFoe = game.add.group();
-  // enemies = game.add.group();
-
-  // for (var i = 0; i < 16; i++)
-  // {
-  //     //  This creates a new Phaser.Sprite instance within the group
-  //     //  It will be randomly placed within the world and use the 'baddie' image to display
-  //     enemies.create(360 + Math.random() * 200, 120 + Math.random() * 200, 'baddie');
-  // }
-
-  // //  You can also add existing sprites to a group.
-  // //  Here we'll create a local sprite called 'ufo'
-  // var ufo = game.add.sprite(200, 240, 'ufo');
-
-  // //  And then add it to the group
-  // friendAndFoe.add(ufo);
-
   GameLogic.addNewPlayer = function (id, x, y, playerName = null) {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
 
     const character = this.add.sprite(x, y, 'sprite');
     const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
-    const text = phaserGame.add.text(0, -5, playerName, style); // need to multiple -5 by the number of times the username wraps around
+    const text = phaserGame.add.text(0, -5, playerName, style); // need to multiply -5 by the number of times the username wraps around
     character.addChild(text);
 
     phaserGame.camera.follow(character);
@@ -91,6 +74,7 @@ function initGameVars() {
     const duration = distance * 10;
     tween.to({ x: x, y: y }, duration);
     tween.start();
+    playFootsteps(duration);
   };
 
   GameLogic.update = function () {
