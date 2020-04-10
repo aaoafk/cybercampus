@@ -6,6 +6,7 @@ Run: <python -m webserver.py>
 
 Then navigate to localhost:8000 to see what it looks like
 
+Deploying to heroku:
  2504  git add .
  2505  git commit -m "initial commit"
  2506  heroku create --stack cedar
@@ -13,4 +14,3 @@ Then navigate to localhost:8000 to see what it looks like
  2508  heroku ps:scale web=1
  2509  heroku open
  2510  history
-
