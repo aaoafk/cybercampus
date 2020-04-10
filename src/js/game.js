@@ -66,18 +66,6 @@ function initGameVars() {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
 
-    // const characterAndName = phaserGame.add.group();
-    // const character = this.add.sprite(x, y, 'sprite');
-
-    // text = phaserGame.add.text(x, y + 1, playerName, style);
-    // text.anchor.set(0.5);
-
-    // characterAndName.add(character);
-    // characterAndName.add(text);
-
-    // const character = characterAndName.create(x, y, 'sprite');
-    // const text = characterAndName.create()
-
     const character = this.add.sprite(x, y, 'sprite');
     const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
     const text = phaserGame.add.text(0, -5, playerName, style);
