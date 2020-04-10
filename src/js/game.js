@@ -1,7 +1,7 @@
 /*
  * Bye J
  */
-
+var followSet = false;
 function initGameVars() {
   GameLogic = {};
 
@@ -45,7 +45,7 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  GameLogic.addNewPlayer = function (id, x, y, playerName = null) {
+  GameLogic.addNewPlayer = function (id, x, y, playerName = null, followPlayer = false) {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
 
@@ -53,8 +53,12 @@ function initGameVars() {
     const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
     const text = phaserGame.add.text(0, -5, playerName, style); // need to multiply -5 by the number of times the username wraps around
     character.addChild(text);
+    console.log(Client.socket);
 
-    phaserGame.camera.follow(character);
+    if (followPlayer && !followSet) {
+      phaserGame.camera.follow(character);
+      followSet = true;
+    }
 
     phaserGame.physics.arcade.enable(character);
     // prevent out of bounds movement

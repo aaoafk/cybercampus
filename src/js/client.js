@@ -24,13 +24,15 @@ function initClient() {
   }
 
   Client.socket.on('newplayer', function (data) {
-    GameLogic.addNewPlayer(data.id, data.x, data.y, data.username);
-    console.log(data);
+    GameLogic.addNewPlayer(data.id, data.x, data.y, data.username, true);
   });
 
   Client.socket.on('allplayers', function (data) {
+    let jabroni = false;
     for (let i = 0; i < data.length; i++) {
-      GameLogic.addNewPlayer(data[i].id, data[i].x, data[i].y, data[i].username);
+      jabroni = false;
+      if (i === data.length - 1) jabroni = true;
+      GameLogic.addNewPlayer(data[i].id, data[i].x, data[i].y, data[i].username, jabroni);
     }
 
     Client.socket.on('move', function (data) {
