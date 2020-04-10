@@ -25,8 +25,8 @@ function initGameVars() {
     GameLogic.cursors = phaserGame.input.keyboard.createCursorKeys(); // set up keyboard input
     const map = phaserGame.add.tilemap('map');
     // add tileset images
-    map.addTilesetImage('tilesheet', 'tileset'); 
-    map.addTilesetImage('trees', 'treetileset'); 
+    map.addTilesetImage('tilesheet', 'tileset');
+    map.addTilesetImage('trees', 'treetileset');
     map.addTilesetImage('buildings', 'buildingstileset');
     phaserGame.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
@@ -45,17 +45,51 @@ function initGameVars() {
     Client.sendClick(pointer.worldX, pointer.worldY);
   };
 
-  GameLogic.addNewPlayer = function (id, x, y, playerName=null) {
+  // friendAndFoe = game.add.group();
+  // enemies = game.add.group();
+
+  // for (var i = 0; i < 16; i++)
+  // {
+  //     //  This creates a new Phaser.Sprite instance within the group
+  //     //  It will be randomly placed within the world and use the 'baddie' image to display
+  //     enemies.create(360 + Math.random() * 200, 120 + Math.random() * 200, 'baddie');
+  // }
+
+  // //  You can also add existing sprites to a group.
+  // //  Here we'll create a local sprite called 'ufo'
+  // var ufo = game.add.sprite(200, 240, 'ufo');
+
+  // //  And then add it to the group
+  // friendAndFoe.add(ufo);
+
+  GameLogic.addNewPlayer = function (id, x, y, playerName = null) {
     allPlayers[id] = playerName;
     tellMainToUpdateMetaData();
-    character = phaserGame.add.sprite(x, y, 'sprite');
+
+    // const characterAndName = phaserGame.add.group();
+    // const character = this.add.sprite(x, y, 'sprite');
+
+    // text = phaserGame.add.text(x, y + 1, playerName, style);
+    // text.anchor.set(0.5);
+
+    // characterAndName.add(character);
+    // characterAndName.add(text);
+
+    // const character = characterAndName.create(x, y, 'sprite');
+    // const text = characterAndName.create()
+
+    const character = this.add.sprite(x, y, 'sprite');
+    const style = { font: "15px Arial", fill: "#000000", wordWrap: true, wordWrapWidth: character.width, align: "center" };
+    const text = phaserGame.add.text(0, -5, playerName, style);
+    character.addChild(text);
+
     phaserGame.camera.follow(character);
-    
+
     phaserGame.physics.arcade.enable(character);
     // prevent out of bounds movement
     character.body.setCircle(16);
     character.body.collideWorldBounds = true;
-    
+
     GameLogic.playerMap[id] = character;
     GameLogic.playerId = id; // save player id -> potential issue here:
     // there can be multiple players per browser (one per tab). this variable only stores 
