@@ -23,10 +23,13 @@
 <body>
     <div class="container game-container">
         <div>
-            <div>
-                <div id="welcome-text"></div>
-                <!-- <input type="button" onclick="gameVisibility()" value="Show or Hide"> -->
-                <!-- <input type="button" onclick="createGame()" value="Create Game"> -->
+            <div class="row">
+                <div class="col-xs-6 vertical-center">
+                    <div id="welcome-text"></div>
+                </div>
+                <div class="col-xs-6 vertical-center">
+                    <input id="play-nature-sounds" type="button" class="btn btn-primary" onclick="toggleNatureSounds()">
+                </div>
             </div>
             <div class="row">
                 <div class="col-8">
@@ -45,9 +48,13 @@
     <!-- Parent Navigation Modal is loaded in modal-functions.js -->
     <div id="parent-navigation-modal"></div>
 
-    <input type="button" class="btn btn-primary" onclick="playElevatorMusic()" value="Play music">
+    <input id="play-elevator-music" type="button" class="btn btn-primary" onclick="toggleElevatorMusic()">
     <audio id="elevator-music">
         <source src="./assets/music/basic_elevator.mp3" type="audio/mp3">
+    </audio>
+
+    <audio id="nature-sounds">
+        <source src="./assets/music/nature_sounds.mp3" type="audio/mp3">
     </audio>
 
 </body>

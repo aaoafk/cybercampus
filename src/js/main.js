@@ -25,8 +25,9 @@ function cleanUpGame() {
 function createGame() {
   cleanUpGame();
   initGame();
-  document.getElementById('welcome-text').innerHTML = '<h1>Hello ' + username + '!</h1>';
+  document.getElementById('welcome-text').innerHTML = 'Hello ' + username + '!';
   showOrHideGame(true);
+  startNatureSounds();
 }
 
 function tellMainToCheckLogin() {
