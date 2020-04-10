@@ -59,6 +59,12 @@ function initFootsteps() {
   footsteps.loop = true;
 }
 
+function initChatter() {
+  const chatter = document.getElementById('chatter');
+  chatter.volume = 0.5;
+  chatter.loop = true;
+}
+
 initElevatorMusic();
 initNatureSounds();
 initFootsteps();
